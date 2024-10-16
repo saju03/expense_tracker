@@ -22,6 +22,7 @@ export default function GoogleSign() {
         }
       })
       .catch((err) => {
+        navigate("/login");
         console.error(err);
       });
   };

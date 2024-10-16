@@ -16,12 +16,12 @@ const UseRedirect: React.FC = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        
       if (user ) {
         setLoader(true);
         const { uid } = user;
         const userRef = doc(db, "users", uid);
         const userSnap = await getDoc(userRef);
+        // todo alerts
         if (userSnap.exists()) {
           const { email, fullName, profession } = userSnap.data();
           dispatch(setUserDetails({ fName: fullName, email: email, profession: profession, isLoggedIn: true }));
