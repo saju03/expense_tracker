@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface UserState {
   fullName: string | null;
   email: string | null;
-  profileImage: string | null;
+  profession: string | null;
   isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
   fullName: null,
   email: null,
-  profileImage: null,
+  profession: null,
   isLoggedIn: false,
 };
 
@@ -18,18 +18,17 @@ const userDetails = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserDetails: (state, action: PayloadAction<{ fName: string; email: string; profileImage: string; isLoggedIn: boolean }>) => {
+    setUserDetails: (state, action: PayloadAction<{ fName: string|null; email: string|null; profession: string|null; isLoggedIn: boolean }>) => {
       console.log(action);
-      debugger
       state.fullName = action.payload.fName;
       state.email = action.payload.email;
-      state.profileImage = action.payload.profileImage;
+      state.profession = action.payload.profession;
       state.isLoggedIn = action.payload.isLoggedIn;
     },
     logOutUser: (state) => {
       state.fullName = null;
       state.email = null;
-      state.profileImage = null;
+      state.profession = null;
     },
   },
 });

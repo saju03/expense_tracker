@@ -9,6 +9,7 @@ import showLoader from "./utils/context/LoaderContext";
 import Dashboard from "./components/Dashboard";
 import { Provider } from "react-redux";
 import store from "./utils/redux/store";
+import UseRedirect from "./hooks/useRedirect";
 
 const AppLayout: React.FC = () => {
   const [isLoader, setLoader] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const AppLayout: React.FC = () => {
       <Provider store={store}>
         {/* added context for just only for demo */}
         <showLoader.Provider value={{ isLoader, setLoader }}>
+          <UseRedirect />
           {isLoader && <Loader />}
           <Header />
           <Outlet />
@@ -43,6 +45,10 @@ const routes: RouteObject[] = [
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/transaction",
+        element: <>transaction</>
       },
       {
         path: "*", // Catch-all route for 404

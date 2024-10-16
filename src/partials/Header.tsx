@@ -31,7 +31,7 @@ const Header: React.FC = function () {
           <a onClick={() => navigate("/")} className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer">
             Dashboard
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a onClick={()=>navigate('/transaction')} className="text-sm font-semibold leading-6 text-gray-900">
             Transactions
           </a>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">

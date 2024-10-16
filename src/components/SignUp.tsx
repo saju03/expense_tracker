@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import signUp from "../assets/sign-up.png";
-import { userSignUp } from "../../interface";
+import { RootState, userSignUp } from "../../interface";
 import { useForm } from "react-hook-form";
 import { HandleSignUp } from "../utils/Helper/helper";
 import { useNavigate } from "react-router-dom";
 import showLoader from "../utils/context/LoaderContext";
 import { useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import GoogleSign from "./GoogleSign";
 const SignUp: React.FC = () => {
-    const {setLoader} = useContext(showLoader)
+  const { setLoader } = useContext(showLoader);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<userSignUp>();
+
+  const user = useSelector((store: RootState) => store.user);
+  const { isLoggedIn } = user;
   const navigate = useNavigate();
-const dispatch = useDispatch()
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div>
       {" "}
@@ -30,7 +39,7 @@ const dispatch = useDispatch()
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            onSubmit={handleSubmit((data: userSignUp) => HandleSignUp(data, navigate, reset,setLoader,dispatch))}
+            onSubmit={handleSubmit((data: userSignUp) => HandleSignUp(data, navigate, reset, setLoader))}
             method="POST"
             className="space-y-6"
             noValidate
@@ -100,7 +109,7 @@ const dispatch = useDispatch()
                   {...register("password", {
                     required: "Password is required",
                     pattern: {
-                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+={}\[\]:;"'<>,.?~`-]{8,}$/,
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+={}\\[\]:;"'<>,.?~`-]{8,}$/,
                       message:
                         "Password must be at least 8 characters long and contain at least one letter and one number.",
                     },
@@ -124,6 +133,12 @@ const dispatch = useDispatch()
               </button>
             </div>
           </form>
+          <div className="flex w-full mx-auto justify-center">
+            <span>or</span>
+          </div>
+          <div className="flex">
+            <GoogleSign />
+          </div>
           <p className="mt-10 text-center text-sm text-gray-500">
             Already Have an account ?{" "}
             <a

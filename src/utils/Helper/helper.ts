@@ -4,10 +4,13 @@ import { auth, db } from "../../firebase/config";
 import { NavigateFunction } from "react-router-dom";
 import { UseFormReset } from "react-hook-form";
 import { doc, setDoc } from "firebase/firestore";
-import { setUserDetails } from "../redux/userSlice";
-import { Dispatch, UnknownAction } from "redux";
 
-export const HandleSignUp = async (data: userSignUp, navigate: NavigateFunction, reset: UseFormReset<userSignUp>, setLoader: React.Dispatch<React.SetStateAction<boolean>>,dispatch: Dispatch<UnknownAction>) => {
+export const HandleSignUp = async (
+  data: userSignUp,
+  navigate: NavigateFunction,
+  reset: UseFormReset<userSignUp>,
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   try {
     setLoader(true);
     await createUserWithEmailAndPassword(auth, data.email, data.password);
@@ -22,10 +25,6 @@ export const HandleSignUp = async (data: userSignUp, navigate: NavigateFunction,
       });
     }
 
-    // todo alerts
-    dispatch(setUserDetails({ fName: data.fName, email: data.email, profileImage: "null", isLoggedIn: true }));
-    navigate("/login");
-    setLoader(false);
   } catch (error) {
     navigate("/login");
     setLoader(false);
@@ -33,14 +32,17 @@ export const HandleSignUp = async (data: userSignUp, navigate: NavigateFunction,
   }
 };
 
-export const HandleLogIn = async (data: userSignIn, navigate: NavigateFunction, reset: UseFormReset<userSignIn>, setLoader: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const HandleLogIn = async (
+  data: userSignIn,
+  reset: UseFormReset<userSignIn>,
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   // todo alerts
   try {
     setLoader(true);
     const loginStatus = await signInWithEmailAndPassword(auth, data.email, data.password);
     if (loginStatus) {
-      // todo redirect dashboard
-      setLoader(false);
+      reset();
     }
   } catch (error) {
     console.error(error);

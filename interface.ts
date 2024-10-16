@@ -17,7 +17,7 @@ export interface UserState {
     fullName: string;
     email: string;
     isLoggedIn: boolean;
-    profileImage:string|null
+    profession:string|null
   }
   
   export interface RootState {
