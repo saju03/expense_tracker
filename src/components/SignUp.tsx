@@ -2,10 +2,11 @@ import React from "react";
 import signUp from "../assets/sign-up.png";
 import { userSignUp } from "../../interface";
 import { useForm } from "react-hook-form";
-import { HandleSignUp } from "../utils/helper";
+import { HandleSignUp } from "../utils/Helper/helper";
 import { useNavigate } from "react-router-dom";
-import showLoader from "../utils/context/loaderContex";
+import showLoader from "../utils/context/LoaderContext";
 import { useContext } from "react";
+import { useDispatch } from "react-redux";
 const SignUp: React.FC = () => {
     const {setLoader} = useContext(showLoader)
   const {
@@ -15,7 +16,7 @@ const SignUp: React.FC = () => {
     reset,
   } = useForm<userSignUp>();
   const navigate = useNavigate();
-
+const dispatch = useDispatch()
   return (
     <div>
       {" "}
@@ -29,7 +30,7 @@ const SignUp: React.FC = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            onSubmit={handleSubmit((data: userSignUp) => HandleSignUp(data, navigate, reset,setLoader))}
+            onSubmit={handleSubmit((data: userSignUp) => HandleSignUp(data, navigate, reset,setLoader,dispatch))}
             method="POST"
             className="space-y-6"
             noValidate

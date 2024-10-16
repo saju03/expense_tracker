@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import { createBrowserRouter, Outlet, RouterProvider, RouteObject } from "react-router-dom";
-import "./App.css";
 import Header from "./partials/Header";
-import Table from "./components/Table";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import NotFound from "./NotFound";
 import Loader from "./components/Loader";
-import showLoader from "./utils/context/loaderContex";
+import showLoader from "./utils/context/LoaderContext";
+import Dashboard from "./components/Dashboard";
+import { Provider } from "react-redux";
+import store from "./utils/redux/store";
 
 const AppLayout: React.FC = () => {
   const [isLoader, setLoader] = useState<boolean>(false);
   return (
     <>
-      <showLoader.Provider value={{ isLoader, setLoader }}>
-        {isLoader && <Loader />}
-        <Header />
-        <Outlet />
-      </showLoader.Provider>
+      <Provider store={store}>
+        {/* added context for just only for demo */}
+        <showLoader.Provider value={{ isLoader, setLoader }}>
+          {isLoader && <Loader />}
+          <Header />
+          <Outlet />
+        </showLoader.Provider>
+      </Provider>
     </>
   );
 };
@@ -29,7 +33,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <Table />,
+        element: <Dashboard />,
       },
       {
         path: "/login",
