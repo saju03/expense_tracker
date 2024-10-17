@@ -26,7 +26,7 @@ interface AddExpenseProps {
 const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
   const [selectedType, setSelectedType] = useState<string>("income");
   const [incomeTypes,setIncomType] = useState<string[]>(["Salary", "Bonus", "Investment", "Rental", "Income", "Other"]);
-  const [expenseTypes,setExpenseType] = useState<string[]>(["Rent", "Food", "Travel", "Cosmetics", "Bills", "Other"]);
+  const [expenseTypes,setExpenseType] = useState<string[]>(["Rent", "Food", "Travel", "Cosmetics", "Bills", "Other "]);
   const [err, setErr] = useState<string>("");
   const dispatch = useDispatch()
   const [expense, setExpense] = useState<Expense>({

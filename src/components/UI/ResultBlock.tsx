@@ -19,11 +19,7 @@ const ResultBlock: React.FC<Expense> = ({ data }) => {
         <img src={data.spentType == "income" ? credit : debit} alt="" loading="lazy" className="w-4 mr-2" />
         {data.amount}
       </td>
-      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-        <button onClick={() => {}} className="text-blue-500 hover:text-blue-700 focus:outline-none">
-          <i className="fas fa-pencil-alt"></i>
-        </button>
-      </td>
+ 
     </tr>
   );
 };

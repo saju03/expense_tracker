@@ -6,7 +6,12 @@ import { UseFormReset } from "react-hook-form";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { format } from "date-fns";
 
-export const HandleSignUp = async (data: userSignUp, navigate: NavigateFunction, reset: UseFormReset<userSignUp>, setLoader: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const HandleSignUp = async (
+  data: userSignUp,
+  navigate: NavigateFunction,
+  reset: UseFormReset<userSignUp>,
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   try {
     setLoader(true);
     await createUserWithEmailAndPassword(auth, data.email, data.password);
@@ -27,7 +32,11 @@ export const HandleSignUp = async (data: userSignUp, navigate: NavigateFunction,
   }
 };
 
-export const HandleLogIn = async (data: userSignIn, reset: UseFormReset<userSignIn>, setLoader: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const HandleLogIn = async (
+  data: userSignIn,
+  reset: UseFormReset<userSignIn>,
+  setLoader: React.Dispatch<React.SetStateAction<boolean>>
+) => {
   // todo alerts
   try {
     setLoader(true);
@@ -92,26 +101,43 @@ export const getTotal = (key: string, value: string, array: Array<Record<string,
   }, 0);
 };
 
-
-export const finalFilter = (filterValues,result)=>{
-  const spentFilter = spentTypeFilter(result,filterValues.spentType)
-  const category = categoryFilter(result,filterValues.category)
-  return spentFilter && category
-
-}
-
-
+export const finalFilter = (filterValues, result) => {
+  
+  const spentFilter = spentTypeFilter(result, filterValues.spentType);
+  const category = categoryFilter(result, filterValues.category);
+  const dateRanges = filterResultsByDateRange(result, filterValues?.dateRange?.[0]);
+  return spentFilter && category && dateRanges;
+};
 
 const spentTypeFilter = (result, valueArray) => {
-  if (valueArray.length>0 && result) {
-   return valueArray.includes(result.spentType)
-  } 
-  return true
+  if (valueArray.length > 0 && result) {
+    return valueArray.includes(result.spentType);
+  }
+  return true;
 };
 
 const categoryFilter = (result, valueArray) => {
-  if (valueArray.length>0 && result) {
-   return valueArray.includes(result.category)
-  } 
-  return true
+  if (valueArray.length > 0 && result) {
+    return valueArray.includes(result.category);
+  }
+  return true;
+};
+
+interface Result {
+  date: string; // Dates in ISO format
+}
+
+const filterResultsByDateRange = (result: Result, dateRanges: { from: string; to: string }): boolean => {
+  if (result && dateRanges) {
+    
+    const fromDate = new Date(dateRanges.from);
+    const toDate = new Date(dateRanges.to);
+
+    toDate.setHours(23, 59, 59, 999);
+
+    const resultDate = new Date(result.date);
+
+    return resultDate >= fromDate && resultDate <= toDate;
+  }
+  return true;
 };

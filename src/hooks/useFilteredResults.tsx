@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { finalFilter, getTotal } from "../utils/Helper/helper";
@@ -32,7 +33,7 @@ const useFilteredResults: React.FC = () => {
     setValues({...values,totalIncome:totalIncome,totalExpense:totalExpense,balance:totalIncome-totalExpense})
   }, [results]);
 
-  return {filteredResults,filterValues,setFilterValues,values}; 
+  return {filteredResults,filterValues,setFilterValues,values,results}; 
 };
 
 export default useFilteredResults;
