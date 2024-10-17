@@ -9,7 +9,8 @@ import showLoader from "./utils/context/LoaderContext";
 import Dashboard from "./components/Dashboard";
 import { Provider } from "react-redux";
 import store from "./utils/redux/store";
-import UseRedirect from "./hooks/useRedirect";
+import UseRedirect from "./hooks/UseRedirect";
+import { Footer } from "./partials/Footer";
 
 const AppLayout: React.FC = () => {
   const [isLoader, setLoader] = useState<boolean>(false);
@@ -22,6 +23,7 @@ const AppLayout: React.FC = () => {
           {isLoader && <Loader />}
           <Header />
           <Outlet />
+          <Footer/>
         </showLoader.Provider>
       </Provider>
     </>

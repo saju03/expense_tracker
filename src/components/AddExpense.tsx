@@ -7,6 +7,9 @@ import Datepicker from "./UI/DatePicker";
 import { auth, db } from "../firebase/config";
 import { getAuth } from "firebase/auth";
 import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from 'uuid'; // Import a UUID generator
+import { useDispatch } from "react-redux";
+import { addExpense } from "../utils/redux/expenseSlice";
 
 interface Expense {
   spentType: string;
@@ -25,6 +28,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
   const [incomeTypes,setIncomType] = useState<string[]>(["Salary", "Bonus", "Investment", "Rental", "Income", "Other"]);
   const [expenseTypes,setExpenseType] = useState<string[]>(["Rent", "Food", "Travel", "Cosmetics", "Bills", "Other"]);
   const [err, setErr] = useState<string>("");
+  const dispatch = useDispatch()
   const [expense, setExpense] = useState<Expense>({
     spentType: "income",
     category: "",
@@ -41,36 +45,42 @@ const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
   };
 
   const handleSubmit = async () => {
-    if (parseFloat(expense.amount) <= 0) {
+    // Validate amount
+    const parsedAmount = parseFloat(expense.amount);
+    if (parsedAmount <= 0) {
       setErr("Please enter a valid amount.");
       return;
     }
-
+  
     try {
       const auth = getAuth();
       const user = auth.currentUser;
-
-      if (user) {
-        const userRef = doc(db, "expense", user.uid);
-        await setDoc(
-          userRef,
-          {
-            expenses: arrayUnion({
-              amount: parseFloat(expense.amount),
-              createdAt: new Date(),
-              date: expense.date,
-              category: expense.category,
-              spentType: expense.spentType,
-            }),
-          },
-          { merge: true }
-        ); 
-        setExpense({ ...expense, amount: 0.0 });
-        setErr("");
-        setOpen(false);
-      } else {
+  
+      if (!user) {
         setErr("User not logged in.");
+        return; 
       }
+  
+      const userRef = doc(db, "expense", user.uid);
+      const uniqueId = uuidv4();
+  
+      const expenseData = {
+        uid: uniqueId,
+        amount: parsedAmount,
+        createdAt: new Date().toISOString(),
+        date: expense.date instanceof Date ? expense.date.toISOString() : new Date(expense.date).toISOString(),
+        category: expense.category,
+        spentType: expense.spentType,
+      };
+  
+      await setDoc(userRef, { expenses: arrayUnion(expenseData) }, { merge: true });
+  
+      dispatch(addExpense(expenseData));
+  
+      // Reset the expense state and error message
+      setExpense({ ...expense, amount: 0.0 });
+      setErr("");
+      setOpen(false);
     } catch (error) {
       console.error("Error adding expense: ", error);
       setErr("Error adding expense. Please try again.");
@@ -150,7 +160,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
                 onClick={handleSubmit}
                 className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
               >
-                Add git 
+                Add  
               </button>
               <button
                 type="button"

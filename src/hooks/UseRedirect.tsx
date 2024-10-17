@@ -7,6 +7,8 @@ import { setUserDetails } from "../utils/redux/userSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import showLoader from "../utils/context/LoaderContext";
+import { fetchExpense } from "../utils/Helper/helper";
+import { setExpenses } from "../utils/redux/expenseSlice";
 
 const UseRedirect: React.FC = () => {
   const navigate = useNavigate();
@@ -25,8 +27,12 @@ const UseRedirect: React.FC = () => {
         if (userSnap.exists()) {
           const { email, fullName, profession } = userSnap.data();
           dispatch(setUserDetails({ fName: fullName, email: email, profession: profession, isLoggedIn: true }));
+         const expenses = await fetchExpense()
+         dispatch(setExpenses(expenses))
         }else{
             dispatch(setUserDetails({ fName: user.displayName, email: user.email, profession: null, isLoggedIn: true }));
+            const expenses = await fetchExpense()
+            dispatch(setExpenses(expenses))
         }
         redirect("/");
         setLoader(false);

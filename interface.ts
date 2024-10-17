@@ -23,3 +23,13 @@ export interface UserState {
   export interface RootState {
     user: UserState;
   }
+
+  export interface Expense {
+    uid: string;
+    amount: number;
+    category: string;
+    createdAt: Date;
+    date: Date;
+    spentType: string;
+  }
+  
