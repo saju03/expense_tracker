@@ -42,7 +42,8 @@ export const AiTextBox = () => {
     </div>
     <div className="flex h-32 w-2/12 justify-center">
       <button className={`bg-[#4e7ff4] m-auto p-1 px-7 rounded-md text-white ${loading ? 'disabled':''}`} onClick={() =>{
-        if(loading) return 
+        if(data.length ==0) alert('add some data')
+        if(loading || data.length == 0) return 
         getAIResult()}}>
         Ask
       </button>

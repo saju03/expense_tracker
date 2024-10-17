@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 
 const DropDown  = ({ spentTypes, expense, setExpense, selectedType }) => {
-  const [selectedValue, setSelectedValue] = useState<string>("");
+  const [selectedValue, setSelectedValue] = useState("");
 
   const handleSelectChange = (e) => {
     const newValue = e.target.value;
