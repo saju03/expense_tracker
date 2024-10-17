@@ -36,7 +36,7 @@ const AddExpense  = ({ open, setOpen }) => {
 
   const handleSubmit = async () => {
     // Validate amount
-    const parsedAmount = parseFloat(expense.amount.toString());
+    const parsedAmount = parseFloat(expense.amount).toFixed(3);
 
     if (parsedAmount <= 0) {
       setErr("Please enter a valid amount.");
