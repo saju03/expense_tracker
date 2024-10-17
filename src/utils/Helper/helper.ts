@@ -6,12 +6,7 @@ import { UseFormReset } from "react-hook-form";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { format } from "date-fns";
 
-export const HandleSignUp = async (
-  data: userSignUp,
-  navigate: NavigateFunction,
-  reset: UseFormReset<userSignUp>,
-  setLoader: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+export const HandleSignUp = async (data: userSignUp, navigate: NavigateFunction, reset: UseFormReset<userSignUp>, setLoader: React.Dispatch<React.SetStateAction<boolean>>) => {
   try {
     setLoader(true);
     await createUserWithEmailAndPassword(auth, data.email, data.password);
@@ -32,11 +27,7 @@ export const HandleSignUp = async (
   }
 };
 
-export const HandleLogIn = async (
-  data: userSignIn,
-  reset: UseFormReset<userSignIn>,
-  setLoader: React.Dispatch<React.SetStateAction<boolean>>
-) => {
+export const HandleLogIn = async (data: userSignIn, reset: UseFormReset<userSignIn>, setLoader: React.Dispatch<React.SetStateAction<boolean>>) => {
   // todo alerts
   try {
     setLoader(true);
@@ -90,4 +81,37 @@ export const formatDate = (date: string) => {
   const dateValue = new Date(date);
 
   return format(dateValue, "MMM dd EEE");
+};
+
+export const getTotal = (key: string, value: string, array: Array<Record<string, any>> = []): number => {
+  return array.reduce((total, e) => {
+    if (e[key] === value) {
+      total += parseFloat(e.amount) || 0;
+    }
+    return total;
+  }, 0);
+};
+
+
+export const finalFilter = (filterValues,result)=>{
+  const spentFilter = spentTypeFilter(result,filterValues.spentType)
+  const category = categoryFilter(result,filterValues.category)
+  return spentFilter && category
+
+}
+
+
+
+const spentTypeFilter = (result, valueArray) => {
+  if (valueArray.length>0 && result) {
+   return valueArray.includes(result.spentType)
+  } 
+  return true
+};
+
+const categoryFilter = (result, valueArray) => {
+  if (valueArray.length>0 && result) {
+   return valueArray.includes(result.category)
+  } 
+  return true
 };

@@ -34,18 +34,7 @@ const Header: React.FC = function () {
           <a onClick={()=>navigate('/transaction')} className="text-sm font-semibold leading-6 text-gray-900">
             Transactions
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Accounts
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Reports
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Budget
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Settings
-          </a>
+          
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <p

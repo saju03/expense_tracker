@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { finalFilter, getTotal } from "../utils/Helper/helper";
 
 const useFilteredResults: React.FC = () => {
   const results = useSelector((store) => store.expense);
   const [filteredResults, setFilteredResults] = useState(results);
+  const [filterValues,setFilterValues] = useState({
+    dateRange:[],
+    spentType:[],
+    category:[]
+  })
+  const [values,setValues] = useState({
+    totalExpense:0,
+    totalIncome:0,
+    balance:0
+  })
+
+
+  useEffect(()=>{
+    const filteredRes =  results.filter((item: any)=>{
+    return  finalFilter(filterValues,item)
+    })
+    setFilteredResults(()=>filteredRes)
+  },[filterValues])
+
 
   useEffect(() => {
-    // todo set the filter state to reset when result changes
-    
     setFilteredResults(results);
+    const totalIncome = getTotal('spentType','income',results)
+    const totalExpense = getTotal('spentType','expense',results)
+    setValues({...values,totalIncome:totalIncome,totalExpense:totalExpense,balance:totalIncome-totalExpense})
   }, [results]);
 
-  return filteredResults; 
+  return {filteredResults,filterValues,setFilterValues,values}; 
 };
 
 export default useFilteredResults;
