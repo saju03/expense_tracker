@@ -1,21 +1,18 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, User } from "firebase/auth";
-import { Expense, userSignIn, userSignUp } from "../../../interface";
-import { auth, db } from "../../firebase/config";
-import { NavigateFunction } from "react-router-dom";
-import { UseFormReset } from "react-hook-form";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+ import { auth, db } from "../../firebase/config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { format } from "date-fns";
 
 export const HandleSignUp = async (
-  data: userSignUp,
-  navigate: NavigateFunction,
-  reset: UseFormReset<userSignUp>,
-  setLoader: React.Dispatch<React.SetStateAction<boolean>>
+  data ,
+  navigate ,
+  reset ,
+  setLoader 
 ) => {
   try {
     setLoader(true);
     await createUserWithEmailAndPassword(auth, data.email, data.password);
-    const user: User | null = auth.currentUser;
+    const user = auth.currentUser;
 
     reset();
     if (user) {
@@ -33,9 +30,9 @@ export const HandleSignUp = async (
 };
 
 export const HandleLogIn = async (
-  data: userSignIn,
-  reset: UseFormReset<userSignIn>,
-  setLoader: React.Dispatch<React.SetStateAction<boolean>>
+  data ,
+  reset ,
+  setLoader 
 ) => {
   // todo alerts
   try {
@@ -60,7 +57,7 @@ export const userLogOut = async () => {
     });
 };
 
-export const fetchExpense = async (): Promise<Expense[] | null> => {
+export const fetchExpense = async () => {
   try {
     const user = getAuth().currentUser;
 
@@ -86,13 +83,13 @@ export const fetchExpense = async (): Promise<Expense[] | null> => {
   }
 };
 
-export const formatDate = (date: string) => {
+export const formatDate = (date) => {
   const dateValue = new Date(date);
 
   return format(dateValue, "MMM dd EEE");
 };
 
-export const getTotal = (key: string, value: string, array: Array<Record<string, any>> = []): number => {
+export const getTotal = (key, value, array = []) => {
   return array.reduce((total, e) => {
     if (e[key] === value) {
       total += parseFloat(e.amount) || 0;
@@ -123,11 +120,8 @@ const categoryFilter = (result, valueArray) => {
   return true;
 };
 
-interface Result {
-  date: string; // Dates in ISO format
-}
-
-const filterResultsByDateRange = (result: Result, dateRanges: { from: string; to: string }): boolean => {
+ 
+const filterResultsByDateRange = (result , dateRanges ) => {
   if (result && dateRanges) {
     
     const fromDate = new Date(dateRanges.from);

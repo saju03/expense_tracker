@@ -3,7 +3,7 @@ import Table from "./Table";
 import useFetchResults from "../hooks/useFetchResults";
 import Shimmer from "./UI/Shimmer";
 
-const Dashboard: React.FC = () => {
+const Dashboard= () => {
   const { loading } = useFetchResults();
   return <div>{loading ? <Shimmer /> : <Table />}</div>;
 };

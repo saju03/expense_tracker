@@ -4,12 +4,12 @@ export default function FilterBlock({ setFilterValues, filterValues }) {
   const incomeTypes = ["Salary", "Bonus", "Investment", "Rental", "Income", "Other"];
 
   const expenseTypes = ["Rent", "Food", "Travel", "Cosmetics", "Bills", "Other "];
-  const handleCategoryFilter = (key: string, value: string) => {
-    setFilterValues((prevFilterValues: { [x: string]: never[] }) => {
+  const handleCategoryFilter = (key , value ) => {
+    setFilterValues((prevFilterValues ) => {
       const currentValues = prevFilterValues[key] || [];
 
       const updatedValues = currentValues.includes(value)
-        ? currentValues.filter((item: any) => item !== value)
+        ? currentValues.filter((item ) => item !== value)
         : [...currentValues, value];
 
       return {
@@ -21,7 +21,7 @@ export default function FilterBlock({ setFilterValues, filterValues }) {
 
   const [dateRange, setDateRange] = useState({ from: "", to: "", val: "" });
 
-  const handleDateFilter = (days: number) => {
+  const handleDateFilter = (days ) => {
     const to = new Date();
     const from = new Date();
     from.setDate(to.getDate() - days);
@@ -32,10 +32,10 @@ export default function FilterBlock({ setFilterValues, filterValues }) {
       val: days,
     };
 
-    const existingRangeIndex = filterValues.dateRange.findIndex((range: { val: number; }) => range.val === days);
+    const existingRangeIndex = filterValues.dateRange.findIndex((range ) => range.val === days);
 
     if (existingRangeIndex > -1) {
-      const updatedDateRanges = filterValues.dateRange.filter((range: { val: number; }) => range.val !== days);
+      const updatedDateRanges = filterValues.dateRange.filter((range ) => range.val !== days);
 
       setFilterValues({
         ...filterValues,

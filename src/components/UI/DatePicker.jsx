@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface Props {
-  label?: string;
-}
 
-const Datepicker: React.FC<Props> = ({ label, expense, setExpense }) => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const handleChange = (date:Date|null) => {
+const Datepicker = ({ label, expense, setExpense }) => {
+  const [startDate, setStartDate] = useState(new Date());
+  const handleChange = (date) => {
     setStartDate(date)
     setExpense({...expense,date:date})
   };
@@ -17,7 +14,7 @@ const Datepicker: React.FC<Props> = ({ label, expense, setExpense }) => {
       {label && <label className="mb-2 text-sm font-semibold">{label}</label>}
       <DatePicker
         selected={startDate}
-        onChange={(date: Date | null) => {
+        onChange={(date) => {
           handleChange(date);
         }}
         dateFormat="MMMM d, yyyy"

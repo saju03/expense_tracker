@@ -3,11 +3,9 @@ import { fetchExpense } from "../utils/Helper/helper"; // Adjust the import path
 import { useDispatch } from "react-redux";
 import { setExpenses } from "../utils/redux/expenseSlice";
 
-interface UseFetchResults {
-  loading: boolean; 
-}
+ 
 
-const useFetchResults = (): UseFetchResults => {
+const useFetchResults = ()  => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 

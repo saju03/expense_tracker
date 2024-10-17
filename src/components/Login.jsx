@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import signIn from "../assets/sign-in.png";
 import { useNavigate } from "react-router-dom";
-import { RootState, userSignIn } from "../../interface";
-import { useForm } from "react-hook-form";
+ import { useForm } from "react-hook-form";
 import { HandleLogIn } from "../utils/Helper/helper";
 import showLoader from "../utils/context/LoaderContext";
 import GoogleSign from "./GoogleSign";
 import { useSelector } from "react-redux";
-const Login: React.FC = () => {
+const Login = () => {
   const { setLoader } = useContext(showLoader);
-  const user = useSelector((store: RootState) => store.user);
+  const user = useSelector((store ) => store.user);
   const { isLoggedIn } = user;
   const navigate = useNavigate();
   useEffect(() => {
@@ -23,7 +22,7 @@ const Login: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<userSignIn>();
+  } = useForm ();
 
   return (
     <div>
@@ -38,7 +37,7 @@ const Login: React.FC = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            onSubmit={handleSubmit((data: userSignIn) => HandleLogIn(data, reset, setLoader))}
+            onSubmit={handleSubmit((data ) => HandleLogIn(data, reset, setLoader))}
             className="space-y-6"
             noValidate
           >

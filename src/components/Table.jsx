@@ -4,24 +4,23 @@ import React, { useState } from "react";
 import AddExpense from "./AddExpense";
 import useFilteredResults from "../hooks/useFilteredResults";
 import ResultBlock from "./UI/ResultBlock";
-import { Expense } from "../../interface";
-import FilterBlock from "./FilterBlock";
+ import FilterBlock from "./FilterBlock";
 import { AiTextBox } from "./AiTextBox";
 
-const Table: React.FC = () => {
-  const [open, setOpen] = useState<boolean>(false);
+const Table  = () => {
+  const [open, setOpen] = useState (false);
 
 
   const { filteredResults, filterValues, setFilterValues, values } = useFilteredResults({}, {});
 
-  const handleFilterSelect = (key: string, value: string) => {
-    setFilterValues((prevState: { [x: string]: never[] }) => {
+  const handleFilterSelect = (key , value ) => {
+    setFilterValues((prevState ) => {
       const currentValues = prevState[key] || [];
 
       if (currentValues.includes(value)) {
         return {
           ...prevState,
-          [key]: currentValues.filter((v: any) => v !== value),
+          [key]: currentValues.filter((v ) => v !== value),
         };
       } else {
         return {
@@ -104,13 +103,15 @@ const Table: React.FC = () => {
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                       Amount
                     </th>
-                  
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                      Action
+                    </th>
                   </tr>
                 </thead>
 
                 <tbody>
                   {filteredResults?.length > 0 ? (
-                    filteredResults?.map((expense: Expense, i: number) => (
+                    filteredResults?.map((expense , i ) => (
                       <ResultBlock key={`resultBlock${i}`} data={expense} />
                     ))
                   ) : (

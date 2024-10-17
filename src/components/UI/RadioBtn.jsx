@@ -1,9 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
-interface props{
-    setSelectedType:Dispatch<SetStateAction<string>>
-}
 
-const RadioBtn:React.FC<props> = ({setSelectedType}) => {
+const RadioBtn = ({setSelectedType}) => {
 
 
   return (

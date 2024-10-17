@@ -1,23 +1,22 @@
 import React, { useEffect } from "react";
 import signUp from "../assets/sign-up.png";
-import { RootState, userSignUp } from "../../interface";
-import { useForm } from "react-hook-form";
+ import { useForm } from "react-hook-form";
 import { HandleSignUp } from "../utils/Helper/helper";
 import { useNavigate } from "react-router-dom";
 import showLoader from "../utils/context/LoaderContext";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 import GoogleSign from "./GoogleSign";
-const SignUp: React.FC = () => {
+const SignUp  = () => {
   const { setLoader } = useContext(showLoader);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<userSignUp>();
+  } = useForm ();
 
-  const user = useSelector((store: RootState) => store.user);
+  const user = useSelector((store ) => store.user);
   const { isLoggedIn } = user;
   const navigate = useNavigate();
   useEffect(() => {
@@ -39,7 +38,7 @@ const SignUp: React.FC = () => {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
-            onSubmit={handleSubmit((data: userSignUp) => HandleSignUp(data, navigate, reset, setLoader))}
+            onSubmit={handleSubmit((data ) => HandleSignUp(data, navigate, reset, setLoader))}
             method="POST"
             className="space-y-6"
             noValidate

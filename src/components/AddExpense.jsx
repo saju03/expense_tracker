@@ -2,41 +2,31 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 import RadioBtn from "./UI/RadioBtn";
 import DropDown from "./UI/DropDown";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Datepicker from "./UI/DatePicker";
-import { auth, db } from "../firebase/config";
+import {  db } from "../firebase/config";
 import { getAuth } from "firebase/auth";
-import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from 'uuid'; // Import a UUID generator
 import { useDispatch } from "react-redux";
 import { addExpense } from "../utils/redux/expenseSlice";
+import React from "react";
 
-interface Expense {
-  spentType: string;
-  category: string;
-  amount: number | string;
-  date: Date;
-}
 
-interface AddExpenseProps {
-  open: boolean;
-  setOpen: (value: boolean) => void;
-}
-
-const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
-  const [selectedType, setSelectedType] = useState<string>("income");
-  const [incomeTypes,setIncomType] = useState<string[]>(["Salary", "Bonus", "Investment", "Rental", "Income", "Other"]);
-  const [expenseTypes,setExpenseType] = useState<string[]>(["Rent", "Food", "Travel", "Cosmetics", "Bills", "Other "]);
-  const [err, setErr] = useState<string>("");
+const AddExpense  = ({ open, setOpen }) => {
+  const [selectedType, setSelectedType] = useState ("income");
+  const [incomeTypes] = useState (["Salary", "Bonus", "Investment", "Rental", "Income", "Other"]);
+  const [expenseTypes] = useState (["Rent", "Food", "Travel", "Cosmetics", "Bills", "Other "]);
+  const [err, setErr] = useState ("");
   const dispatch = useDispatch()
-  const [expense, setExpense] = useState<Expense>({
+  const [expense, setExpense] = useState ({
     spentType: "income",
     category: "",
     amount: 0.0,
     date: new Date(),
   });
 
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAmountChange = (e ) => {
     setErr('')
     const value = e.target.value;
     if (/^\d*\.?\d*$/.test(value)) {
@@ -46,7 +36,8 @@ const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
 
   const handleSubmit = async () => {
     // Validate amount
-    const parsedAmount = parseFloat(expense.amount);
+    const parsedAmount = parseFloat(expense.amount.toString());
+
     if (parsedAmount <= 0) {
       setErr("Please enter a valid amount.");
       return;
@@ -64,7 +55,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
       const userRef = doc(db, "expense", user.uid);
       const uniqueId = uuidv4();
   
-      const expenseData = {
+      const expenseData  = {
         uid: uniqueId,
         amount: parsedAmount,
         createdAt: new Date().toISOString(),
@@ -150,7 +141,7 @@ const AddExpense: React.FC<AddExpenseProps> = ({ open, setOpen }) => {
                 )}
               </div>
               <div className="flex justify-center items-center">
-                <Datepicker expense={expense} setExpense={setExpense} />
+                <Datepicker expense={expense} setExpense={setExpense} label={undefined} />
               </div>
             </div>
 

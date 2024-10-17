@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../assets/hand.png";
 import { userLogOut } from "../utils/Helper/helper";
 import { useSelector } from "react-redux";
-import { RootState } from "../../interface";
-const Header: React.FC = function () {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const Header  = function () {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState (false);
   const navigate = useNavigate();
-  const user = useSelector((store: RootState) => store.user);
+  const user = useSelector((store ) => store.user);
   const { isLoggedIn } = user;
 
   return (

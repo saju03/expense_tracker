@@ -5,7 +5,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export const generateAiReports = () => {};
 
-export const GenAIRes = async ({data}:any) => {
+export const GenAIRes = async ({data} ) => {
     
   const prompt =
     "Analyze a user's financial data (income and expenses) to identify areas where expense management can be improved. Provide actionable recommendations tailored to the user's specific financial situation and goals. Consider factors such as income level, spending patterns, and industry benchmarks. The analysis should be comprehensive and insightful, highlighting potential savings opportunities and areas for increased financial efficiency.";

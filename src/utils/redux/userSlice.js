@@ -1,25 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface UserState {
-  fullName: string | null;
-  email: string | null;
-  profession: string | null;
-  isLoggedIn: boolean;
-}
-
-const initialState: UserState = {
+const initialState = {
   fullName: null,
   email: null,
   profession: null,
   isLoggedIn: false,
 };
 
+
 const userDetails = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserDetails: (state, action: PayloadAction<{ fName: string|null; email: string|null; profession: string|null; isLoggedIn: boolean }>) => {
-      console.log(action);
+    setUserDetails: (state, action) => {
       state.fullName = action.payload.fName;
       state.email = action.payload.email;
       state.profession = action.payload.profession;

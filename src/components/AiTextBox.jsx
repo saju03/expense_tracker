@@ -4,12 +4,12 @@ import { GenAIRes } from '../GenerativeAI/GenAI';
 import { Spinner } from './UI/Spinner';
 
 export const AiTextBox = () => {
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState (false);
     const [displayedText, setDisplayedText] = useState("Ask AI to how to manage your expenses and income more efficient");
 
     const data = useSelector((store) => store.expense);
 
-    const displayWordByWord = (text: string) => {
+    const displayWordByWord = (text ) => {
       setDisplayedText(() => "");
       setLoading(() => false);
       const words = text.split(" ");

@@ -1,6 +1,5 @@
 import  { createContext} from "react";
-import { LoaderContextType } from "../../../interface";
-const showLoader = createContext<LoaderContextType>({
+ const showLoader = createContext ({
     isLoader:false,
     setLoader:()=>{}
     

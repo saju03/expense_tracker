@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { finalFilter, getTotal } from "../utils/Helper/helper";
 
-const useFilteredResults: React.FC = () => {
+const useFilteredResults = () => {
   const results = useSelector((store) => store.expense);
   const [filteredResults, setFilteredResults] = useState(results);
   const [filterValues,setFilterValues] = useState({
@@ -19,7 +19,7 @@ const useFilteredResults: React.FC = () => {
 
 
   useEffect(()=>{
-    const filteredRes =  results.filter((item: any)=>{
+    const filteredRes =  results.filter((item )=>{
     return  finalFilter(filterValues,item)
     })
     setFilteredResults(()=>filteredRes)

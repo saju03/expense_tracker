@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { redirect, useNavigate } from "react-router-dom";
-import { Dispatch } from "redux";
-import { useDispatch } from "react-redux";
+ import { useDispatch } from "react-redux";
 import { setUserDetails } from "../utils/redux/userSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
@@ -10,10 +9,10 @@ import showLoader from "../utils/context/LoaderContext";
 import { fetchExpense } from "../utils/Helper/helper";
 import { setExpenses } from "../utils/redux/expenseSlice";
 
-const UseRedirect: React.FC = () => {
+const UseRedirect  = () => {
   const navigate = useNavigate();
   const auth = getAuth();
-  const dispatch: Dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { setLoader } = useContext(showLoader);
 
   useEffect(() => {

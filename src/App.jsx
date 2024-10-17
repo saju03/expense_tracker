@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createBrowserRouter, Outlet, RouterProvider, RouteObject } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Header from "./partials/Header";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -12,8 +12,8 @@ import store from "./utils/redux/store";
 import UseRedirect from "./hooks/UseRedirect";
 import { Footer } from "./partials/Footer";
 
-const AppLayout: React.FC = () => {
-  const [isLoader, setLoader] = useState<boolean>(false);
+const AppLayout = () => {
+  const [isLoader, setLoader] = useState (false);
   return (
     <>
       <Provider store={store}>
@@ -30,7 +30,7 @@ const AppLayout: React.FC = () => {
   );
 };
 
-const routes: RouteObject[] = [
+const routes  = [
   {
     path: "/",
     element: <AppLayout />,
@@ -48,12 +48,9 @@ const routes: RouteObject[] = [
         path: "/signup",
         element: <SignUp />,
       },
+     
       {
-        path: "/transaction",
-        element: <>transaction</>
-      },
-      {
-        path: "*", // Catch-all route for 404
+        path: "*", 
         element: <NotFound />,
       },
     ],
@@ -62,7 +59,7 @@ const routes: RouteObject[] = [
 
 const appRouter = createBrowserRouter(routes);
 
-const App: React.FC = () => {
+const App = () => {
   return <RouterProvider router={appRouter} />;
 };
 
